@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="SysdepartInfo">
+	<typeAlias alias="sysdepartInfo" type="com.syscore.system.sysdepart.model.SysdepartInfo" />
+	<resultMap id="sysdepartResult" class="com.syscore.system.sysdepart.model.SysdepartInfo">
+		<!-- ID -->
+		<result property="id" column="id" />
+		<!-- 父ID -->
+		<result property="pid" column="pid" />
+		<!-- 编码 -->
+		<result property="code" column="code" />
+		<!-- 名称 -->
+		<result property="name" column="name" />
+		<!-- 结构层 -->
+		<result property="pids" column="pids" />
+		<!-- 默认 1；0 无效 ；1 有效 -->
+		<result property="lastnode" column="lastnode" />
+		<!-- 默认 1；0 无效 ；1 有效 -->
+		<result property="valid" column="valid" />
+	</resultMap>
+ 
+	<!-- 数据添加 -->
+	<insert id="insert" parameterClass="sysdepartInfo">
+	    <![CDATA[ 
+	    	insert into s_sysdepart(
+				id
+				,pid
+				,code
+				,name
+				,pids
+				,lastnode
+				,valid
+			)
+			values(
+				#id#
+				,#pid#
+				,#code#
+				,#name#
+				,#pids#
+				,#lastnode#
+				,#valid#
+			)
+		]]>
+	</insert>
+
+	<!-- 数据删除 -->
+	<delete id="delete" parameterClass="sysdepartInfo">
+		<![CDATA[
+			delete from s_sysdepart where id = #id#
+		]]>
+    </delete>
+
+	<!-- 数据修改 -->
+	<update id="update" parameterClass="sysdepartInfo">
+		<![CDATA[
+			update s_sysdepart set
+				id = #id#
+				,pid = #pid#
+				,code = #code#
+				,name = #name#
+				,pids = #pids#
+				,lastnode = #lastnode#
+				,valid = #valid#
+			where id = #id#
+		]]>
+	</update>
+	
+	<!-- 数据查询 -->
+	<select id="selectByMap" parameterClass="map" resultMap="sysdepartResult" >
+		select * from s_sysdepart
+		order by code
+	</select>
+	
+	<!--获取T对象 -->
+	<select id="selectEntity" parameterClass="sysdepartInfo" resultMap="sysdepartResult">
+		select * from s_sysdepart where name = #name#		
+	</select>
+
+	<!-- 分页查询总记录数 -->
+  	<select id="selectPageCount" parameterClass="map" resultClass="Integer" >
+		<![CDATA[
+			select count(*) from s_sysdepart where pid is null
+		]]>
+	</select>
+
+	<!-- 分页查询数据 -->
+	<select id="selectPage" parameterClass="map" resultMap="sysdepartResult" >
+<!--		select * from (-->
+<!--				select a.*,rownum row_num from (-->
+<!--						select * from s_sysdepart t-->
+<!--					) a-->
+<!--			) b-->
+<!--		where b.row_num between $pageBegin$ and $pageEnd$-->
+<!--		order by code desc-->
+		select * from s_sysdepart			 
+		<dynamic prepend="where">
+			<isNotEmpty  property="name" prepend="and">
+				name = #name#
+			</isNotEmpty> 
+		</dynamic>	
+		where pid is null		
+		order by code
+		limit #pageBegin#,#pageSize#
+		
+	</select>
+	
+	<!-- 分页节点的子节点 -->
+	<select id="selectPageChildren" parameterClass="map" resultMap="sysdepartResult">
+		select * from s_sysdepart
+		where substr(pids,1,32) in ($inItem$)
+		order by code
+	</select>
+	
+	<!-- 获取根节点最大code -->
+	<select id="selectMaxCode" resultClass="java.lang.String">
+		select max(code)  from s_sysdepart where pid is null
+	</select>
+	
+	<!-- 获取子节点最大code -->
+	<select id="selectMaxChildrenCode" parameterClass="sysdepartInfo" resultClass="java.lang.String">
+		select max(code)  from s_sysdepart where pid = #pid# 
+	</select>
+
+</sqlMap>

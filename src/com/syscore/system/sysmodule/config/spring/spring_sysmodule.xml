@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	<!-- 模块DAO -->
+	<bean id="com.syscore.system.sysmodule.dao.ISysmoduleDao" class="com.syscore.system.sysmodule.dao.impl.SysmoduleDao">
+		<property name="sqlMapClient" ref="sqlMapClient" />
+	</bean>
+
+	<!-- 模块SERVICE -->
+	<bean id="com.syscore.system.sysmodule.service.ISysmoduleService" class="com.syscore.system.sysmodule.service.impl.SysmoduleService">
+		<property name="dao" ref="com.syscore.system.sysmodule.dao.ISysmoduleDao" /> 
+	</bean>
+
+	<!-- 模块ACTION -->
+	<bean id="sysmoduleAction" class="com.syscore.system.sysmodule.action.SysmoduleAction" scope="prototype">
+		<property name="service" ref="com.syscore.system.sysmodule.service.ISysmoduleService" />
+	</bean>
+</beans>

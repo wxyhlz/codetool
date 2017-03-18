@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+
+	
+	<!-- 系统：部门——通知——模块——角色——用户 -->
+	<!-- 系统(部门) -->
+	<include file="com/syscore/system/sysdepart/config/struts/struts_sysdepart.xml"></include>
+	<!-- 系统(模块) -->
+	<include file="com/syscore/system/sysmodule/config/struts/struts_sysmodule.xml"></include>
+	<!-- 系统(角色) -->
+	<include file="com/syscore/system/sysrole/config/struts/struts_sysrole.xml"></include>
+	<!-- 系统(用户) -->
+	<include file="com/syscore/system/sysuser/config/struts/struts_sysuser.xml"></include>
+	<!-- 系统(操作员) -->
+	<include file="com/syscore/system/operator/config/action/struts_operator.xml"></include>
+	 
+</struts>  	
+	

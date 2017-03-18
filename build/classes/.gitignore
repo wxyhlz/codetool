@@ -1,0 +1,8 @@
+/com/
+/ehcache.xml
+/log4j.properties
+/messageResource_zh_CN.properties
+/struts.properties
+/struts.xml
+*.class
+/target/

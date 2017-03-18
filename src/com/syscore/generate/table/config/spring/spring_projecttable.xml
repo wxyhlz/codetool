@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	<!-- 关系表和实体类对应关系DAO -->
+	<bean id="com.syscore.generate.table.dao.IProjectTableDao" class="com.syscore.generate.table.dao.impl.ProjectTableDao">
+		<property name="sqlMapClient" ref="sqlMapClient" />
+	</bean>
+
+	<!-- 关系表和实体类对应关系SERVICE -->
+	<bean id="com.syscore.generate.table.service.IProjectTableService" class="com.syscore.generate.table.service.impl.ProjectTableService">
+		<property name="dao" ref="com.syscore.generate.table.dao.IProjectTableDao" /> 
+		<property name="prjService" ref = "com.syscore.generate.project.service.IProjectService"></property>
+		
+		<property name="projectColumnService" ref="com.syscore.generate.table.service.IProjectColumnService"></property>
+	</bean>
+
+	<!-- 关系表和实体类对应关系ACTION -->
+	<bean id="projectTableAction" class="com.syscore.generate.table.action.ProjectTableAction" scope="prototype">
+		<property name="service" ref="com.syscore.generate.table.service.IProjectTableService" />
+	</bean>
+</beans>

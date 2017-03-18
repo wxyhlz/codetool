@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+
+	<!-- 引用ehCache的配置 -->
+	<bean id="defaultCacheManager"
+		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="configLocation">
+			<value>classpath:ehcache.xml</value>
+		</property>
+	</bean>
+	
+	<!-- 定义ehCache的工厂，并设置所使用的Cache name -->
+	<bean id="listCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+		<property name="cacheManager">
+			<ref local="defaultCacheManager" />
+		</property>
+		<property name="cacheName">
+			<value>list_cache</value>
+		</property>
+	</bean>
+	
+	<bean id="mapCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+		<property name="cacheManager">
+			<ref local="defaultCacheManager" />
+		</property>
+		<property name="cacheName">
+			<value>map_cache</value>
+		</property>
+	</bean>
+	
+</beans>

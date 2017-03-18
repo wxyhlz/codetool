@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 字典数据Spring主文件配置 -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+	
+		
+	<!-- 系统：部门——通知——模块——角色——角色模块——用户——用户角色 -->
+	<!-- 系统(部门) -->
+	<import resource="classpath*:/com/syscore/system/sysdepart/config/spring/spring_sysdepart.xml" />
+	<!-- 系统(通知) -->
+	<import resource="classpath*:/com/syscore/system/sysinform/config/spring/spring_sysinform.xml" />
+	<!-- 系统(模块) -->
+	<import resource="classpath*:/com/syscore/system/sysmodule/config/spring/spring_sysmodule.xml" />
+	<!-- 系统(角色) -->
+	<import resource="classpath*:/com/syscore/system/sysrole/config/spring/spring_sysrole.xml" />
+	<!-- 系统(角色模块) -->
+	<import resource="classpath*:/com/syscore/system/sysrolemodule/config/spring/spring_sysrolemodule.xml" />
+	<!-- 系统(用户) -->
+	<import resource="classpath*:/com/syscore/system/sysuser/config/spring/spring_sysuser.xml" />
+	<!-- 系统(用户角色) -->
+	<import resource="classpath*:/com/syscore/system/sysuserrole/config/spring/spring_sysuserrole.xml" />	
+	<!-- 系统(操作员) -->
+	<import resource="classpath*:/com/syscore/system/operator/config/spring/spring_operator.xml"/> 
+</beans>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="SysmoduleInfo">
+	<typeAlias alias="sysmoduleInfo" type="com.syscore.system.sysmodule.model.SysmoduleInfo" />
+	<resultMap id="sysmoduleResult" class="com.syscore.system.sysmodule.model.SysmoduleInfo">
+		<!-- ID -->
+		<result property="id" column="id" />
+		<!-- 父ID -->
+		<result property="pid" column="pid" />
+		<!-- 编码 -->
+		<result property="code" column="code" />
+		<!-- 名称 -->
+		<result property="name" column="name" />
+		<!-- 结构层 -->
+		<result property="pids" column="pids" />
+		<!-- URL -->
+		<result property="actionurl" column="actionurl" />
+		<!-- 图标 -->
+		<result property="icon" column="icon" />
+		<!-- 默认 1；0 无效 ；1 有效 -->
+		<result property="lastnode" column="lastnode" />
+		<!-- 默认 1； 0 弹出窗口；1 右侧frame打开 -->
+		<result property="opentype" column="opentype" />
+		<!-- 默认 1；0 无效 ；1 有效 -->
+		<result property="valid" column="valid" />
+	</resultMap>
+
+	<!-- 数据添加 -->
+	<insert id="insert" parameterClass="sysmoduleInfo">
+	    <![CDATA[ 
+	    	insert into s_sysmodule(
+				id
+				,pid
+				,code
+				,name
+				,pids
+				,actionurl
+				,icon
+				,lastnode
+				,opentype
+				,valid
+			)
+			values(
+				#id#
+				,#pid#
+				,#code#
+				,#name#
+				,#pids#
+				,#actionurl#
+				,#icon#
+				,#lastnode#
+				,#opentype#
+				,#valid#
+			)
+		]]>
+	</insert>
+
+	<!-- 数据删除 -->
+	<delete id="delete" parameterClass="sysmoduleInfo">
+		<![CDATA[
+			delete from s_sysmodule where id = #id#
+		]]>
+    </delete>
+
+	<!-- 数据修改 -->
+	<update id="update" parameterClass="sysmoduleInfo">
+		<![CDATA[
+			update s_sysmodule set
+				id = #id#
+				,pid = #pid#
+				,code = #code#
+				,name = #name#
+				,pids = #pids#
+				,actionurl = #actionurl#
+				,icon = #icon#
+				,lastnode = #lastnode#
+				,opentype = #opentype#
+				,valid = #valid#
+			where id = #id#
+		]]>
+	</update>
+
+	<!-- 分页查询总记录数 -->
+  <select id="selectPageCount" parameterClass="map" resultClass="Integer" >
+		<![CDATA[
+			select count(*) from s_sysmodule where pid is null
+		]]>
+	</select>
+
+	<!-- 分页查询数据 -->
+	<select id="selectPage" parameterClass="map" resultMap="sysmoduleResult" >
+		select * from s_sysmodule	
+		where pid is null	
+		order by code
+		limit #pageBegin#,#pageSize#
+	</select>
+	
+	
+	<!-- 数据查询 -->
+	<select id="selectByMap" parameterClass="map" resultMap="sysmoduleResult" >
+		<![CDATA[
+			select * from s_sysmodule
+			where valid='1'
+			order by code
+		]]>
+	</select>
+	
+	<!-- 获取T对象 -->
+	<select id="selectEntity" parameterClass="Object" resultMap="sysmoduleResult" > 
+		select * from s_sysmodule 
+		<dynamic prepend="where">
+			<isNotEmpty  property="name" prepend="and">
+	              name = #name#
+	        </isNotEmpty >
+       	</dynamic>
+	</select>
+	
+	<!-- 分页节点的子节点 -->
+	<select id="selectPageChildren" parameterClass="Map" resultMap="sysmoduleResult">
+		select * from s_sysmodule
+		where substring(pids,1,32) in ($inItem$)
+		order by code
+	</select>
+	
+	<!-- 获取根节点最大code -->
+	<select id="selectMaxCode" resultClass="java.lang.String">
+		select max(code)  from s_sysmodule where pid is null
+	</select>
+	
+	<!-- 获取子节点最大code -->
+	<select id="selectMaxChildrenCode" parameterClass="Object" resultClass="java.lang.String">
+		select max(code)  from s_sysmodule where pid = #pid# 
+	</select>
+	
+	<!-- 获取登陆模块数据 -->
+	<select id="loginModules" parameterClass="map" resultMap="sysmoduleResult">		 
+		select * from s_sysmodule m
+			where exists (
+				select distinct m.id from s_sysuserrole a,s_sysrolemodule b
+					where a.eid = #userid# and a.rid = b.rid and b.mid = m.id 
+			)
+		order by  m.code
+	</select> 
+
+</sqlMap>

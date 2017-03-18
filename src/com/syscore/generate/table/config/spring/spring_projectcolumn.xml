@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	<!-- 关系表字段和实体类对应关系DAO -->
+	<bean id="com.syscore.generate.table.dao.IProjectColumnDao" class="com.syscore.generate.table.dao.impl.ProjectColumnDao">
+		<property name="sqlMapClient" ref="sqlMapClient" />
+	</bean>
+	
+	<bean id="com.syscore.generate.zcode.zfile.ICodeToFile" class="com.syscore.generate.zcode.zfile.CodeToFile"> 
+	</bean>
+
+	<!-- 关系表字段和实体类对应关系SERVICE -->
+	<bean id="com.syscore.generate.table.service.IProjectColumnService" class="com.syscore.generate.table.service.impl.ProjectColumnService">
+		<property name="dao" ref="com.syscore.generate.table.dao.IProjectColumnDao" /> 
+		
+		<property name="prjService" ref = "com.syscore.generate.project.service.IProjectService"></property>
+		<property name="authorService" ref="com.syscore.generate.author.service.IProjectauthorService" />
+		<property name="generateFile" ref="com.syscore.generate.zcode.zfile.ICodeToFile" />		
+	</bean>
+	
+
+	<!-- 关系表字段和实体类对应关系ACTION -->
+	<bean id="projectColumnAction" class="com.syscore.generate.table.action.ProjectColumnAction" scope="prototype">
+		<property name="service" ref="com.syscore.generate.table.service.IProjectColumnService" />
+	</bean>
+</beans>

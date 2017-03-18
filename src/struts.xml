@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.action.extension" value="action"></constant> 
+	<!-- 整个项目中最大的上传文件 8M-->
+	<constant name="struts.multipart.maxSize" value="9000000"/>
+	<package name="centuryStruts" extends="json-default" namespace="/">	
+		<!-- 拦截器 -->
+		<interceptors>
+			<!-- 定义权限拦截器 -->
+			<interceptor name="auth" class="com.syscore.commons.interceptor.AuthorityInterceptor" />			
+			<!-- 定义异常拦截器 -->
+			<interceptor name="except" class="com.syscore.commons.interceptor.ExcepInterceptor" />	
+					
+			<!-- 自定义拦截器堆栈 -->
+			<interceptor-stack name="centuryStack"> 
+				<!-- 权限 -->
+                <interceptor-ref name="auth" />                
+				<interceptor-ref name="defaultStack" />
+				<!-- 异常 -->
+				<interceptor-ref name="except" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="centuryStack" />
+		
+		<!-- 主操作页面 -->
+		<action name="webframe">
+			<result name="success">/WEB-INF/frame/webframe.jsp</result>
+		</action>		
+		
+		<!-- 注册验证码图片 -->
+		<action name="image" class="com.util.image.Image" method="makeImage"></action>
+		
+	
+		<!-- 全局result：<global-results>要放在<global-exception-mappings>前面
+		<global-results>
+			<result name="login" type="redirectAction">login</result>			
+			<result name="noPermit">/WEB-INF/common/error/noPermit.jsp</result>
+			<result name="input" type="redirectAction">login</result>
+			<result name="logindirect">/WEB-INF/common/loginDirect.jsp</result>
+			<result name="error">/WEB-INF/common/error/error1.jsp</result>
+		</global-results>
+		  -->
+		<!-- 对应<global-results>的error  
+		<global-exception-mappings>
+			
+			<exception-mapping exception="com.chanjet.common.exception.BusinessException" result="error" />
+			<exception-mapping exception="java.lang.NullPointerException" result="error" />
+			<exception-mapping exception="java.lang.Exception" result="error" />
+		</global-exception-mappings> -->
+
+		<!-- 首页
+		<action name="login">
+			<result name="success">/login.jsp</result>
+		</action>		  -->
+		
+<!--
+		<action name="error">
+			<result>/WEB-INF/common/error/error.jsp</result>
+		</action>
+		<action name="logindirect">
+			<result>/WEB-INF/common/loginDirect.jsp</result>
+		</action>  -->
+	</package>
+
+	<!-- 代码-->
+	<include file="com/config/struts/struts_generate.xml"></include>
+	
+	<!-- 系统-->
+	<include file="com/config/struts/struts_system.xml"></include> 
+	 
+	
+</struts>    

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="common">
+	<parameterMap class="java.util.HashMap" id="params">  
+		<parameter javaType="String" jdbcType="VARCHAR" mode="IN" property="sql" />  
+		<parameter javaType="int" jdbcType="numberic" mode="IN" property="pagenum" />  
+		<parameter javaType="int" jdbcType="numberic" mode="IN" property="pageSize" />  
+ 	</parameterMap>  
+</sqlMap>
