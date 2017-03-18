@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	<!-- 编写者DAO -->
+	<bean id="com.syscore.generate.author.dao.IProjectauthorDao" class="com.syscore.generate.author.dao.impl.ProjectauthorDao">
+		<property name="sqlMapClient" ref="sqlMapClient" />
+	</bean>
+
+	<!-- 编写者SERVICE -->
+	<bean id="com.syscore.generate.author.service.IProjectauthorService" class="com.syscore.generate.author.service.impl.ProjectauthorService">
+		<property name="dao" ref="com.syscore.generate.author.dao.IProjectauthorDao" /> 
+		<property name="prjService" ref="com.syscore.generate.project.service.IProjectService"></property>
+	</bean>
+
+	<!-- 编写者ACTION -->
+	<bean id="projectauthorAction" class="com.syscore.generate.author.action.ProjectauthorAction" scope="prototype">
+		<property name="service" ref="com.syscore.generate.author.service.IProjectauthorService" />
+	</bean>
+</beans>

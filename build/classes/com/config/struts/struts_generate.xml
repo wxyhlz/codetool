@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+
+	<!-- 生成器：数据表——数据列 -->
+	<!-- 生成器(数据表) -->
+	<include file="com/syscore/generate/table/config/struts/struts_projecttable.xml"></include>
+	<!-- 生成器(数据列)-->
+	<include file="com/syscore/generate/table/config/struts/struts_projectcolumn.xml"></include>
+	<!-- 研发人员设置 -->
+	<include file="com/syscore/generate/author/config/struts/struts_projectauthor.xml"></include>
+	
+	<!-- 项目信息 -->
+	<include file="com/syscore/generate/project/config/struts/action_project.xml"></include>
+	 
+</struts>  	
+	

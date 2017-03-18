@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	<!-- 对应—人员角色DAO -->
+	<bean id="com.syscore.system.sysuserrole.dao.ISysuserroleDao" class="com.syscore.system.sysuserrole.dao.impl.SysuserroleDao">
+		<property name="sqlMapClient" ref="sqlMapClient" />
+	</bean>
+
+	<!-- 对应—人员角色SERVICE -->
+	<bean id="com.syscore.system.sysuserrole.service.ISysuserroleService" class="com.syscore.system.sysuserrole.service.impl.SysuserroleService">
+		<property name="dao" ref="com.syscore.system.sysuserrole.dao.ISysuserroleDao" /> 
+	</bean> 
+</beans>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<!-- 操作员SERVICE -->
+	<bean id="com.syscore.system.operator.service.IOperatorService" class="com.syscore.system.operator.service.impl.OperatorService">
+		<property name="sysuserService" ref="com.syscore.system.sysuser.service.ISysuserService"></property>
+		<property name="sysmoduleService" ref="com.syscore.system.sysmodule.service.ISysmoduleService"></property>
+	</bean>
+
+	<!-- 操作员ACTION -->
+	<bean id="operatorAction" class="com.syscore.system.operator.action.OperatorAction" scope="prototype">
+		<property name="service" ref="com.syscore.system.operator.service.IOperatorService" />
+	</bean>
+</beans>
